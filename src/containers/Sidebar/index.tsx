@@ -1,5 +1,5 @@
 import classnames from 'classnames'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 import logo from '@assets/logo.png'
 import { Lang, Language } from '@i18n'
@@ -11,7 +11,6 @@ interface SidebarProps {
         path: string
         name: string
         noMobile?: boolean
-        exact?: boolean
     }>
 }
 
@@ -21,11 +20,12 @@ export default function Sidebar (props: SidebarProps) {
     const { version, premium } = useVersion()
     const { data } = useClashXData()
     const { t } = translation('SideBar')
+    const location = useLocation()
 
     const navlinks = routes.map(
-        ({ path, name, exact, noMobile }) => (
+        ({ path, name, noMobile }) => (
             <li className={classnames('item', { 'no-mobile': noMobile })} key={name}>
-                <NavLink to={path} activeClassName="active" exact={!!exact}>
+                <NavLink to={{ pathname: path, search: location.search }} className={({ isActive }) => classnames({ active: isActive })}>
                     { t(name as keyof typeof Language[Lang]['SideBar']) }
                 </NavLink>
             </li>

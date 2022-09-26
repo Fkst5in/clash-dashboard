@@ -41,7 +41,7 @@ export function Provider (props: ProvidersProps) {
     return (
         <Card className="proxy-provider">
             <Loading visible={visible} />
-            <div className="flex justify-between flex-col md:flex-row md:items-center">
+            <div className="md:(flex-row items-center) flex flex-col justify-between">
                 <div className="flex items-center">
                     <span className="mr-6">{ provider.name }</span>
                     <Tag>{ provider.vehicleType }</Tag>
@@ -51,8 +51,8 @@ export function Provider (props: ProvidersProps) {
                         provider.updatedAt &&
                         <span className="text-sm">{ `${t('providerUpdateTime')}: ${fromNow(new Date(provider.updatedAt), lang)}`}</span>
                     }
-                    <Icon className="pl-5 cursor-pointer text-red" type="healthcheck" size={18} onClick={handleHealthChech} />
-                    <Icon className="pl-5 cursor-pointer" type="update" size={18} onClick={handleUpdate} />
+                    <Icon className="text-red cursor-pointer pl-5" type="healthcheck" size={18} onClick={handleHealthChech} />
+                    <Icon className="cursor-pointer pl-5" type="update" size={18} onClick={handleUpdate} />
                 </div>
             </div>
             <ul className="proxies-list">

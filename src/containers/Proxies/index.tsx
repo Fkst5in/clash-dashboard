@@ -12,7 +12,7 @@ import './style.scss'
 enum sortType {
     None,
     Asc,
-    Desc
+    Desc,
 }
 
 const sortMap = {
@@ -35,7 +35,7 @@ function ProxyGroups () {
     const { t } = translation('Proxies')
 
     const list = useMemo(
-        () => general.mode === 'global' ? [global] : groups,
+        () => general.mode === 'global' ? [global, ...groups] : groups,
         [general, groups, global],
     )
 
@@ -45,17 +45,17 @@ function ProxyGroups () {
             <div className="flex flex-col">
                 <Header title={t('groupTitle')}>
                     <Checkbox
-                        className="text-primary-600 text-sm text-shadow-primary cursor-pointer"
+                        className="text-shadow-primary text-primary-600 cursor-pointer text-sm"
                         checked={config.breakConnections}
                         onChange={value => setConfig('breakConnections', value)}>
                         {t('breakConnectionsText')}
                     </Checkbox>
                 </Header>
-                <Card className="my-2.5 md:my-4 p-0">
-                    <ul className="list-none">
+                <Card className="my-2.5 p-0 md:my-4">
+                    <ul className="list-none divide-y divide-gray-300">
                         {
                             list.map(p => (
-                                <li className="proxies-group-item" key={p.name}>
+                                <li key={p.name}>
                                     <Group config={p} />
                                 </li>
                             ))

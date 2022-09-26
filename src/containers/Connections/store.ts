@@ -15,6 +15,7 @@ export interface FormatConnection {
     download: number
     type: string
     network: string
+    process?: string
     sourceIP: string
     speed: {
         upload: number
@@ -26,6 +27,7 @@ export interface FormatConnection {
 
 class Store {
     protected connections = new Map<string, Connection>()
+
     protected saveDisconnection = false
 
     appendToSet (connections: API.Connections[]) {

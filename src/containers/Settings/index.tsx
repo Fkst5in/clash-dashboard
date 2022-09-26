@@ -100,17 +100,17 @@ export default function Settings () {
             <Header title={t('title')} />
             <Card className="settings-card">
                 <div className="flex flex-wrap">
-                    <div className="w-full flex md:w-1/2 items-center justify-between px-8 py-3">
+                    <div className="flex w-full items-center justify-between py-3 px-8 md:w-1/2">
                         <span className="label font-bold">{t('labels.startAtLogin')}</span>
                         <Switch disabled={!clashXData?.isClashX} checked={startAtLogin} onChange={handleStartAtLoginChange} />
                     </div>
-                    <div className="w-full flex md:w-1/2 items-center justify-between px-8 py-3">
+                    <div className="flex w-full items-center justify-between py-3 px-8 md:w-1/2">
                         <span className="label font-bold">{t('labels.language')}</span>
                         <ButtonSelect options={languageOptions} value={lang} onSelect={(lang) => changeLanguage(lang as Lang)} />
                     </div>
                 </div>
                 <div className="flex flex-wrap">
-                    <div className="w-full flex md:w-1/2 items-center justify-between px-8 py-3">
+                    <div className="flex w-full items-center justify-between py-3 px-8 md:w-1/2">
                         <span className="label font-bold">{t('labels.setAsSystemProxy')}</span>
                         <Switch
                             disabled={!isClashX}
@@ -118,7 +118,7 @@ export default function Settings () {
                             onChange={handleSetSystemProxy}
                         />
                     </div>
-                    <div className="w-full flex md:w-1/2 items-center justify-between px-8 py-3">
+                    <div className="flex w-full items-center justify-between py-3 px-8 md:w-1/2">
                         <span className="label font-bold">{t('labels.allowConnectFromLan')}</span>
                         <Switch checked={allowLan} onChange={handleAllowLanChange} />
                     </div>
@@ -127,7 +127,7 @@ export default function Settings () {
 
             <Card className="settings-card">
                 <div className="flex flex-wrap">
-                    <div className="w-full flex md:w-1/2 items-center justify-between px-8 py-3">
+                    <div className="flex w-full items-center justify-between py-3 px-8 md:w-1/2">
                         <span className="label font-bold">{t('labels.proxyMode')}</span>
                         <ButtonSelect
                             options={proxyModeOptions}
@@ -135,7 +135,7 @@ export default function Settings () {
                             onSelect={handleProxyModeChange}
                         />
                     </div>
-                    <div className="w-full flex md:w-1/2 items-center justify-between px-8 py-3">
+                    <div className="flex w-full items-center justify-between py-3 px-8 md:w-1/2">
                         <span className="label font-bold">{t('labels.socks5ProxyPort')}</span>
                         <Input
                             className="w-28"
@@ -147,7 +147,7 @@ export default function Settings () {
                     </div>
                 </div>
                 <div className="flex flex-wrap">
-                    <div className="w-full flex md:w-1/2 items-center justify-between px-8 py-3">
+                    <div className="flex w-full items-center justify-between py-3 px-8 md:w-1/2">
                         <span className="label font-bold">{t('labels.httpProxyPort')}</span>
                         <Input
                             className="w-28"
@@ -157,7 +157,7 @@ export default function Settings () {
                             onBlur={handleHttpPortSave}
                         />
                     </div>
-                    <div className="w-full flex md:w-1/2 items-center justify-between px-8 py-3">
+                    <div className="flex w-full items-center justify-between py-3 px-8 md:w-1/2">
                         <span className="label font-bold">{t('labels.mixedProxyPort')}</span>
                         <Input
                             className="w-28"
@@ -169,7 +169,7 @@ export default function Settings () {
                     </div>
                 </div>
                 <div className="flex flex-wrap">
-                    <div className="w-full flex md:w-1/2 items-center justify-between px-8 py-3">
+                    <div className="flex w-full items-center justify-between py-3 px-8 md:w-1/2">
                         <span className="label font-bold">{t('labels.externalController')}</span>
                         <span
                             className={classnames({ 'modify-btn': !isClashX }, 'external-controller')}
