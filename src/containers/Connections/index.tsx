@@ -1,4 +1,4 @@
-import { useIntersectionObserver, useSyncedRef, useUnmountEffect } from '@react-hookz/web/esm'
+import { useIntersectionObserver, useSyncedRef, useUnmountEffect } from '@react-hookz/web'
 import { useReactTable, getSortedRowModel, getFilteredRowModel, getCoreRowModel, flexRender, createColumnHelper } from '@tanstack/react-table'
 import classnames from 'classnames'
 import { groupBy } from 'lodash-es'
@@ -8,12 +8,12 @@ import { Header, Checkbox, Modal, Icon, Drawer, Card, Button } from '@components
 import { fromNow } from '@lib/date'
 import { basePath, formatTraffic } from '@lib/helper'
 import { useObject, useVisible } from '@lib/hook'
-import * as API from '@lib/request'
+import type * as API from '@lib/request'
 import { useClient, useConnectionStreamReader, useI18n } from '@stores'
 
 import { Devices } from './Devices'
 import { ConnectionInfo } from './Info'
-import { Connection, FormatConnection, useConnections } from './store'
+import { type Connection, type FormatConnection, useConnections } from './store'
 import './style.scss'
 
 const Columns = {
@@ -180,7 +180,7 @@ export default function Connections () {
     const [device, setDevice] = useState('')
     function handleDeviceSelected (label: string) {
         setDevice(label)
-        instance.getColumn(Columns.SourceIP).setFilterValue(label || undefined)
+        instance.getColumn(Columns.SourceIP)?.setFilterValue(label || undefined)
     }
 
     // click item
@@ -296,13 +296,13 @@ export default function Connections () {
             </Card>
             <Modal title={t('closeAll.title')} show={visible} onClose={hide} onOk={handleCloseConnections}>{t('closeAll.content')}</Modal>
             <Drawer containerRef={cardRef} bodyClassName="flex flex-col" visible={drawerState.visible} width={450}>
-                <div className="flex h-8 items-center justify-between">
+                <div className="h-8 flex items-center justify-between">
                     <span className="pl-3 font-bold">{t('info.title')}</span>
                     <Icon type="close" size={16} className="cursor-pointer" onClick={() => setDrawerState('visible', false)} />
                 </div>
                 <ConnectionInfo className="mt-3 px-5" connection={drawerState.connection} />
                 <div className="mt-3 flex justify-end pr-3">
-                    <Button type="danger" disiabled={drawerState.connection.completed} onClick={() => handleConnectionClosed()}>{ t('info.closeConnection') }</Button>
+                    <Button type="danger" disabled={drawerState.connection.completed} onClick={() => handleConnectionClosed()}>{ t('info.closeConnection') }</Button>
                 </div>
             </Drawer>
         </div>

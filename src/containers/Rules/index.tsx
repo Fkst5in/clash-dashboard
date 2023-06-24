@@ -18,7 +18,7 @@ function RuleProviders () {
             providers.length !== 0 &&
             <div className="flex flex-col">
                 <Header title={t('providerTitle')} />
-                <Card className="shadow-primary mt-4 divide-y rounded p-0">
+                <Card className="mt-4 rounded p-0 shadow-primary divide-y">
                     {
                         providers.map(p => (
                             <Provider key={p.name} provider={p} />
@@ -54,13 +54,13 @@ export default function Rules () {
         <div className="page">
             <RuleProviders />
             <Header className="not-first:mt-7.5" title={t('title')} />
-            <Card className="mt-2.5 flex flex-1 flex-col p-0 focus:outline-none md:mt-4">
+            <Card className="mt-2.5 flex flex-1 flex-col p-0 md:mt-4 focus:outline-none">
                 <AutoSizer className="min-h-120">
                     {
                         ({ height, width }) => (
                             <List
-                                height={height}
-                                width={width}
+                                height={height ?? 0}
+                                width={width ?? 0}
                                 itemCount={rules.length}
                                 itemSize={50}
                             >

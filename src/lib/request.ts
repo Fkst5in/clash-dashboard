@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios'
+import axios, { type AxiosInstance } from 'axios'
 
 export interface Config {
     port: number
@@ -52,6 +52,7 @@ export interface ProxyProviders {
 interface History {
     time: string
     delay: number
+    meanDelay?: number
 }
 
 export interface Proxy {
@@ -59,6 +60,7 @@ export interface Proxy {
     type: 'Direct' | 'Reject' | 'Shadowsocks' | 'Vmess' | 'Trojan' | 'Socks' | 'Http' | 'Snell'
     history: History[]
     udp: boolean
+    alive?: boolean
 }
 
 export interface Group {

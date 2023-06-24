@@ -2,10 +2,10 @@ import classnames from 'classnames'
 import { useMemo } from 'react'
 
 import { basePath, formatTraffic } from '@lib/helper'
-import { BaseComponentProps } from '@models'
+import { type BaseComponentProps } from '@models'
 import { useI18n } from '@stores'
 
-import { Connection } from '../store'
+import { type Connection } from '../store'
 
 interface ConnectionsInfoProps extends BaseComponentProps {
     connection: Partial<Connection>

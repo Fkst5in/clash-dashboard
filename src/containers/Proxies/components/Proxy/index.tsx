@@ -1,12 +1,12 @@
-import type{ AxiosError } from 'axios'
+import type { AxiosError } from 'axios'
 import classnames from 'classnames'
 import { ResultAsync } from 'neverthrow'
 import { useMemo, useLayoutEffect, useCallback } from 'react'
 
 import EE, { Action } from '@lib/event'
 import { isClashX, jsBridge } from '@lib/jsBridge'
-import { Proxy as IProxy } from '@lib/request'
-import { BaseComponentProps } from '@models'
+import { type Proxy as IProxy } from '@lib/request'
+import { type BaseComponentProps } from '@models'
 import { useClient, useProxy } from '@stores'
 
 import './style.scss'
@@ -49,10 +49,11 @@ export function Proxy (props: ProxyProps) {
         })
     }, [config.name, getDelay, set])
 
-    const delay = useMemo(
-        () => config.history?.length ? config.history.slice(-1)[0].delay : 0,
-        [config],
-    )
+    const delay = config.history?.length ? config.history.slice(-1)[0].delay : 0
+    const meanDelay = config.history?.length ? config.history.slice(-1)[0].meanDelay : undefined
+
+    const delayText = delay === 0 ? '-' : `${delay}ms`
+    const meanDelayText = !meanDelay ? '' : `(${meanDelay}ms)`
 
     useLayoutEffect(() => {
         const handler = () => { speedTest() }
@@ -63,9 +64,10 @@ export function Proxy (props: ProxyProps) {
     const hasError = useMemo(() => delay === 0, [delay])
     const color = useMemo(
         () => Object.keys(TagColors).find(
-            threshold => delay <= TagColors[threshold as keyof typeof TagColors],
+            // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+            threshold => (meanDelay || delay) <= TagColors[threshold as keyof typeof TagColors],
         ),
-        [delay],
+        [delay, meanDelay],
     )
 
     const backgroundColor = hasError ? '#E5E7EB' : color
@@ -79,8 +81,8 @@ export function Proxy (props: ProxyProps) {
                 </span>
                 <p className="proxy-name">{config.name}</p>
             </div>
-            <div className="flex h-full flex-col items-center justify-center space-y-3 text-[10px] md:h-[18px] md:flex-row md:justify-between md:space-y-0">
-                <p>{delay === 0 ? '-' : `${delay}ms`}</p>
+            <div className="h-full flex flex-col items-center justify-center text-[10px] md:h-[18px] md:flex-row md:justify-between space-y-3 md:space-y-0">
+                <p >{delayText}{meanDelayText}</p>
                 { config.udp && <p className="rounded bg-gray-200 p-[3px] text-gray-600">UDP</p> }
             </div>
         </div>

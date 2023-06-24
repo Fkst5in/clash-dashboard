@@ -1,9 +1,9 @@
 import react from '@vitejs/plugin-react'
 import jotaiDebugLabel from 'jotai/babel/plugin-debug-label'
 import jotaiReactRefresh from 'jotai/babel/plugin-react-refresh'
+import UnoCSS from 'unocss/vite'
 import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
-import windiCSS from 'vite-plugin-windicss'
 import tsConfigPath from 'vite-tsconfig-paths'
 
 export default defineConfig(
@@ -14,7 +14,7 @@ export default defineConfig(
                 babel: { plugins: [jotaiDebugLabel, jotaiReactRefresh] },
             }),
             tsConfigPath(),
-            windiCSS(),
+            UnoCSS(),
             VitePWA({
                 injectRegister: 'inline',
                 manifest: {

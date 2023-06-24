@@ -2,7 +2,7 @@ import classnames from 'classnames'
 import { useState, useRef, useLayoutEffect } from 'react'
 
 import { noop } from '@lib/helper'
-import { BaseComponentProps } from '@models'
+import { type BaseComponentProps } from '@models'
 import { useI18n } from '@stores'
 import './style.scss'
 

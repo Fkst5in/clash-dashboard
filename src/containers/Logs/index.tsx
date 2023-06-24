@@ -3,7 +3,7 @@ import { lowerCase } from 'lodash-es'
 import { useLayoutEffect, useEffect, useRef, useState } from 'react'
 
 import { Select, Card, Header } from '@components'
-import { Log } from '@models/Log'
+import { type Log } from '@models/Log'
 import { useConfig, useGeneral, useI18n, useLogsStreamReader } from '@stores'
 
 import './style.scss'
@@ -61,7 +61,7 @@ export default function Logs () {
     return (
         <div className="page">
             <Header title={ t('title') } >
-                <span className="text-primary-darken mr-2 text-sm">{t('levelLabel')}:</span>
+                <span className="mr-2 text-sm text-primary-darken">{t('levelLabel')}:</span>
                 <Select
                     disabled={isConfigSilent}
                     options={logLevelOptions}

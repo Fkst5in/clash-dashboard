@@ -1,24 +1,24 @@
-import { usePreviousDistinct, useSyncedRef } from '@react-hookz/web/esm'
-import { AxiosError } from 'axios'
-import produce from 'immer'
-import { atom, useAtom, useAtomValue } from 'jotai'
-import { atomWithImmer } from 'jotai/immer'
-import { atomWithStorage, useUpdateAtom } from 'jotai/utils'
+import { usePreviousDistinct, useSyncedRef } from '@react-hookz/web'
+import { type AxiosError } from 'axios'
+import { produce } from 'immer'
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { atomWithStorage } from 'jotai/utils'
+import { atomWithImmer } from 'jotai-immer'
 import { get } from 'lodash-es'
 import { ResultAsync } from 'neverthrow'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 import useSWR from 'swr'
-import { Get } from 'type-fest'
+import { type Get } from 'type-fest'
 
-import { Language, locales, Lang, getDefaultLanguage } from '@i18n'
+import { Language, locales, type Lang, getDefaultLanguage, type LocalizedType } from '@i18n'
 import { partition } from '@lib/helper'
-import { useWarpImmerSetter, WritableDraft } from '@lib/jotai'
+import { useWarpImmerSetter, type WritableDraft } from '@lib/jotai'
 import { isClashX, jsBridge } from '@lib/jsBridge'
-import { Snapshot } from '@lib/request'
-import * as API from '@lib/request'
+import type * as API from '@lib/request'
 import { StreamReader } from '@lib/streamer'
-import * as Models from '@models'
-import { Log } from '@models/Log'
+import { type Infer } from '@lib/type'
+import type * as Models from '@models'
+import { type Log } from '@models/Log'
 
 import { useAPIInfo, useClient } from './request'
 
@@ -31,9 +31,9 @@ export function useI18n () {
     const lang = useMemo(() => defaultLang ?? getDefaultLanguage(), [defaultLang])
 
     const translation = useCallback(
-        function <Namespace extends keyof typeof Language['en_US']>(namespace: Namespace) {
-            function t<Path extends string> (path: Path): Get<typeof Language['en_US'][Namespace], Path> {
-                return get(Language[lang][namespace], path)
+        function <Namespace extends keyof LocalizedType>(namespace: Namespace) {
+            function t<Path extends Infer<LocalizedType[Namespace]>> (path: Path) {
+                return get(Language[lang][namespace], path) as unknown as Get<LocalizedType[Namespace], Path>
             }
             return { t }
         },
@@ -51,7 +51,7 @@ export const version = atom({
 export function useVersion () {
     const [data, set] = useAtom(version)
     const client = useClient()
-    const setIdentity = useUpdateAtom(identityAtom)
+    const setIdentity = useSetAtom(identityAtom)
 
     useSWR([client], async function () {
         const result = await ResultAsync.fromPromise(client.getVersion(), e => e as AxiosError)
@@ -276,7 +276,7 @@ export function useLogsStreamReader () {
 export function useConnectionStreamReader () {
     const apiInfo = useAPIInfo()
 
-    const connection = useRef(new StreamReader<Snapshot>({ bufferLength: 200 }))
+    const connection = useRef(new StreamReader<API.Snapshot>({ bufferLength: 200 }))
 
     const protocol = apiInfo.protocol === 'http:' ? 'ws:' : 'wss:'
     const url = `${protocol}//${apiInfo.hostname}:${apiInfo.port}/connections?token=${encodeURIComponent(apiInfo.secret)}`

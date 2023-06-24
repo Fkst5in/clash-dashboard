@@ -2,8 +2,7 @@ extends:
   - standard-with-typescript
   - airbnb/hooks
   - plugin:@typescript-eslint/recommended
-plugins:
-  - tailwindcss
+  - '@unocss'
 parser: '@typescript-eslint/parser'
 parserOptions:
   project: './tsconfig.json'
@@ -21,8 +20,6 @@ rules:
     alphabetize: { order: asc }
   }]
   jsx-quotes: [error, prefer-double]
-  'tailwindcss/classnames-order': warn
-  'tailwindcss/no-contradicting-classname': error
   '@typescript-eslint/indent': [error, 4]
   '@typescript-eslint/explicit-function-return-type': off
   '@typescript-eslint/restrict-template-expressions': off
@@ -33,4 +30,5 @@ rules:
   '@typescript-eslint/no-floating-promises': off
   '@typescript-eslint/no-invalid-void-type': off
   '@typescript-eslint/no-misused-promises': off
+  '@typescript-eslint/no-confusing-void-expression': off
   '@typescript-eslint/comma-dangle': [error, only-multiline]
